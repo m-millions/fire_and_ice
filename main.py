@@ -2,9 +2,44 @@
 
 #curl -X GET -H 'Content-type: application/json' https://anapioficeandfire.com/api/houses/378
 import json
+# import psycopg2 #not using switched to sqlite3 instead of setting up an external db for this example
+import sqlite3
 
 import requests
 
+#run test for connection to db
+def connect_to_db():
+	db_connect = sqlite3.connect('test.db')
+
+	db_cursor = db_connect.cursor()
+
+	#db_cursor.execute('''CREATE TABLE boooks(name text, 
+	#	                                     isbn text, 
+	#	                                     publisher text, 
+	#	                                     numberOfPages int, 
+	#	                                     released date,
+	#	                                     country text,
+	#	                                     url text
+	#	                                     mediaType text,
+	#	                                     povCharacters text,
+	#	                                     characters text,
+	#	                                     authors text)''')
+	
+	#db_cursor.execute('''CREATE TABLE books(name text, 
+	#	                                     isbn text, 
+	#	                                     publisher text, 
+	#	                                     numberOfPages int, 
+	#	                                     country text)''')
+
+	#db_cursor.execute("INSERT INTO books VALUES ('A Game of Thrones','978-0553103540','Bantam Books', 695, 'United States')")
+	#db_connect.commit()
+
+	for row in db_cursor.execute('SELECT * FROM books ORDER BY name'):
+		print row
+
+	db_connect.close()
+
+	return("Wooooo DB Is working!")
 
 def get_books():
 	content = ''
@@ -136,9 +171,10 @@ def get_houses():
 	return house_data_attributes
 
 
-print(get_books())
-print(get_houses())
-print(get_characters())
+#print(get_books())
+#print(get_houses())
+#print(get_characters())
+print(connect_to_db())
 
 
 	

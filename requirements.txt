@@ -1,1 +1,2 @@
 requests
+psycopg2 # not using using a sqlite instead
